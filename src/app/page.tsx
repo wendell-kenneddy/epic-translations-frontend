@@ -1,9 +1,34 @@
-"use client";
+import { Saga, SongList } from "@/components/song-list";
+import { client } from "@/sanity/lib/client";
+import { Metadata } from "next";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Epic Translations",
+  description: "Traduções para todas as músicas do musical Epic.",
+  creator: "Wendell Kenneddy",
+};
+
+async function fetchSagas() {
+  const sagas = await client.fetch<Saga[]>(`*[_type == "saga"]{
+      _id,
+      name,
+      "songs": *[_type == "song" && references(^._id)]{
+        _id,
+        name,
+        "slug": slug.current
+      }
+    }`);
+  return sagas;
+}
+
+export default async function Home() {
+  const sagas = await fetchSagas();
+
   return (
     <main className="w-[90%] bg-zinc-900 max-w-[500px] mx-auto flex flex-col items-center gap-4 p-4 rounded-md shadow-lg">
-      <h1 className="font-medium text-lg text-zinc-100">Traduções por saga</h1>
+      <h1 className="font-medium text-lg text-zinc-100 sr-only">Traduções por saga</h1>
+
+      <SongList sagas={sagas} />
     </main>
   );
 }

@@ -1,6 +1,7 @@
 import { SongLayout } from "@/components/song-layout";
 import { SongData } from "@/components/song-list";
 import { client } from "@/sanity/lib/client";
+import { Metadata } from "next";
 import { PortableTextBlock } from "next-sanity";
 
 interface Params {
@@ -24,10 +25,19 @@ export async function generateMetadata({ params }: { params: Params }) {
     `*[_type == "song"]{ name, "slug": slug.current }`
   );
   const song = songNames.find((s) => s.slug == params.slug);
-  return {
+  const metadata: Metadata = {
     title: `Epic Translations | ${song?.name}`,
     description: `Leia a letra traduzida de ${song?.name}.`,
+    creator: "Wendell Kenneddy",
+    openGraph: {
+      type: "website",
+      title: `Epic Translations | ${song?.name}`,
+      siteName: `Epic Translations | ${song?.name}`,
+      description: `Leia a letra traduzida de ${song?.name}.`,
+      locale: "pt-br",
+    },
   };
+  return metadata;
 }
 
 export const dynamicParams = false;

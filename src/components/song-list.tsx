@@ -32,7 +32,7 @@ export async function SongList({ sagas }: SongListProps) {
     <ul className="flex flex-col items-start gap-4">
       {sagas.map((saga) => (
         <li key={saga._id} className="space-y-1">
-          <span className="font-medium text-lg text-zinc-100">{saga.name}</span>
+          <span className="font-medium text-lg text-slate-100">{saga.name}</span>
 
           <ul className="ml-4">
             {saga.songs.map((song) => (

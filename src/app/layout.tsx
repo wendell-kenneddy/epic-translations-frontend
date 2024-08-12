@@ -13,7 +13,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
   return (
     <html lang="pt-br">
-      <body className={`${inter.className} min-h-screen bg-zinc-950 space-y-4`}>
+      <body className={`${inter.className} min-h-screen bg-slate-950 space-y-4`}>
         <Header />
 
         {children}

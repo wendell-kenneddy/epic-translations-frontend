@@ -9,7 +9,7 @@ interface Params {
   slug: string;
 }
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 
 export interface SongWithLyrics extends SongData {
   saga: string;
@@ -50,12 +50,8 @@ async function fetchSong(slug: string) {
       name,
       "saga": saga->name,
       lyrics
-    }[0]`,
-    {},
-    { cache: "no-store" }
+    }[0]`
   );
-
-  if (!song) notFound();
 
   return song;
 }

@@ -26,8 +26,6 @@ async function fetchSagas() {
         "slug": slug.current
       }
     }`,
-    {},
-    { cache: "no-store" }
   );
   return sagas;
 }

@@ -16,7 +16,8 @@ export const metadata: Metadata = {
 };
 
 async function fetchSagas() {
-  const sagas = await client.fetch<Saga[]>(`*[_type == "saga"] | order(index) {
+  const sagas = await client.fetch<Saga[]>(
+    `*[_type == "saga"] | order(index) {
       _id,
       name,
       "songs": *[_type == "song" && references(^._id)] | order(index) {
@@ -24,7 +25,10 @@ async function fetchSagas() {
         name,
         "slug": slug.current
       }
-    }`);
+    }`,
+    {},
+    { cache: "force-cache" }
+  );
   return sagas;
 }
 

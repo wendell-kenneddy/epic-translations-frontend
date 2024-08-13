@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: { params: Params }) {
       title: `Epic Translations | ${song?.name}`,
       siteName: `Epic Translations | ${song?.name}`,
       description: `Leia a letra traduzida de ${song?.name}.`,
+      url: `${process.env.BASE_URL}/songs/${params.slug}`,
       locale: "pt-br",
     },
   };

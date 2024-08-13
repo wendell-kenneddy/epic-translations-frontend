@@ -23,6 +23,13 @@ export const songType = defineType({
         rule.required().error("A song must have a slug to generate a valid URL."),
     }),
     defineField({
+      name: "index",
+      title: "Index",
+      description: "The order in which the song is defined within it's saga.",
+      type: "number",
+      validation: (rule) => rule.required().error("A song must be indexed."),
+    }),
+    defineField({
       name: "saga",
       title: "Saga",
       type: "reference",

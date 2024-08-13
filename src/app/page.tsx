@@ -27,7 +27,7 @@ async function fetchSagas() {
       }
     }`,
     {},
-    { cache: "force-cache" }
+    { cache: "no-store" }
   );
   return sagas;
 }

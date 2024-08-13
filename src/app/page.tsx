@@ -16,10 +16,10 @@ export const metadata: Metadata = {
 };
 
 async function fetchSagas() {
-  const sagas = await client.fetch<Saga[]>(`*[_type == "saga"]{
+  const sagas = await client.fetch<Saga[]>(`*[_type == "saga"] | order(index) {
       _id,
       name,
-      "songs": *[_type == "song" && references(^._id)]{
+      "songs": *[_type == "song" && references(^._id)] | order(index) {
         _id,
         name,
         "slug": slug.current

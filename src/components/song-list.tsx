@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 
 export interface SongData {
@@ -27,7 +25,7 @@ const textColors: Record<string, string> = {
   "Thunder Saga": "text-yellow-400",
 };
 
-export async function SongList({ sagas }: SongListProps) {
+export function SongList({ sagas }: SongListProps) {
   return (
     <ul className="flex flex-col items-start gap-4">
       {sagas.map((saga) => (

@@ -3,10 +3,13 @@ import { SongData } from "@/components/song-list";
 import { client } from "@/sanity/lib/client";
 import { Metadata } from "next";
 import { PortableTextBlock } from "next-sanity";
+import { notFound } from "next/navigation";
 
 interface Params {
   slug: string;
 }
+
+export const dynamicParams = true;
 
 export interface SongWithLyrics extends SongData {
   saga: string;
@@ -41,14 +44,19 @@ export async function generateMetadata({ params }: { params: Params }) {
   return metadata;
 }
 
-export const dynamicParams = false;
-
 async function fetchSong(slug: string) {
-  const song = await client.fetch<SongWithLyrics>(`*[_type == "song" && slug.current == "${slug}" ]{
+  const song = await client.fetch<SongWithLyrics>(
+    `*[_type == "song" && slug.current == "${slug}" ]{
       name,
       "saga": saga->name,
       lyrics
-    }[0]`);
+    }[0]`,
+    {},
+    { cache: "no-store" }
+  );
+
+  if (!song) notFound();
+
   return song;
 }
 

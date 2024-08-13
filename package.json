@@ -13,6 +13,7 @@
   "dependencies": {
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.53.0",
+    "@sanity/webhook": "^4.0.4",
     "next": "14.2.5",
     "next-sanity": "^9.4.5",
     "react": "^18",

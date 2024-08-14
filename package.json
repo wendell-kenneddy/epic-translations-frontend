@@ -7,23 +7,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "typegen": "sanity schema extract && sanity typegen generate"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@sanity/image-url": "^1.0.2",
-    "@sanity/vision": "^3.53.0",
-    "@sanity/webhook": "^4.0.4",
+    "@contentful/rich-text-react-renderer": "^15.22.9",
     "next": "14.2.5",
-    "next-sanity": "^9.4.5",
     "react": "^18",
     "react-dom": "^18",
-    "sanity": "^3.53.0",
-    "sanity-plugin-vercel-deploy": "^3.3.4",
-    "styled-components": "^6.1.12"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0",
+    "@contentful/rich-text-types": "^16.8.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

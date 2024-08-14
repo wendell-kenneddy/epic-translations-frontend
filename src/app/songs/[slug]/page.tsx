@@ -1,42 +1,32 @@
 import { SongLayout } from "@/components/song-layout";
-import { SongData } from "@/components/song-list";
-import { client } from "@/sanity/lib/client";
+import { fetchSong } from "@/queries/fetch-song";
+import { fetchSongs } from "@/queries/fetch-songs";
 import { Metadata } from "next";
-import { PortableTextBlock } from "next-sanity";
-import { notFound } from "next/navigation";
 
 interface Params {
   slug: string;
 }
 
-export const dynamicParams = false;
-
-export interface SongWithLyrics extends SongData {
-  saga: string;
-  lyrics: PortableTextBlock;
-}
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  const slugs = await client.fetch<{ slug: string }[]>(
-    `*[_type == "song"]{ "slug": slug.current }`
-  );
+  const json = await fetchSongs();
+  const slugs = json.items.map((i) => ({ slug: i.fields.slug }));
   return slugs;
 }
 
 export async function generateMetadata({ params }: { params: Params }) {
-  const songNames = await client.fetch<{ name: string; slug: string }[]>(
-    `*[_type == "song"]{ name, "slug": slug.current }`
-  );
-  const song = songNames.find((s) => s.slug == params.slug);
+  const json = await fetchSongs();
+  const song = json.items.find((i) => i.fields.slug == params.slug);
   const metadata: Metadata = {
-    title: `Epic Translations | ${song?.name}`,
-    description: `Leia a letra traduzida de ${song?.name}.`,
+    title: `Epic Translations | ${song?.fields.name}`,
+    description: `Leia a letra traduzida de ${song?.fields.name}.`,
     creator: "Wendell Kenneddy",
     openGraph: {
       type: "website",
-      title: `Epic Translations | ${song?.name}`,
-      siteName: `Epic Translations | ${song?.name}`,
-      description: `Leia a letra traduzida de ${song?.name}.`,
+      title: `Epic Translations | ${song?.fields.name}`,
+      siteName: `Epic Translations | ${song?.fields.name}`,
+      description: `Leia a letra traduzida de ${song?.fields.name}.`,
       url: `${process.env.BASE_URL}/songs/${params.slug}`,
       locale: "pt-br",
     },
@@ -44,20 +34,12 @@ export async function generateMetadata({ params }: { params: Params }) {
   return metadata;
 }
 
-async function fetchSong(slug: string) {
-  const song = await client.fetch<SongWithLyrics>(
-    `*[_type == "song" && slug.current == "${slug}" ]{
-      name,
-      "saga": saga->name,
-      lyrics
-    }[0]`
-  );
-
-  return song;
-}
-
 export default async function Song({ params }: { params: Params }) {
   const song = await fetchSong(params.slug);
+  const parsedSong = {
+    name: song.fields.name,
+    lyrics: song.fields.lyrics,
+  };
 
-  return <SongLayout song={song} />;
+  return <SongLayout song={parsedSong} />;
 }

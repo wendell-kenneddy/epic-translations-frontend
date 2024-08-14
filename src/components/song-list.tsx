@@ -1,13 +1,13 @@
 import Link from "next/link";
 
 export interface SongData {
-  _id: string;
+  id: string;
   name: string;
   slug: string;
 }
 
 export interface Saga {
-  _id: string;
+  id: string;
   name: string;
   songs: SongData[];
 }
@@ -29,13 +29,13 @@ export function SongList({ sagas }: SongListProps) {
   return (
     <ul className="flex flex-col items-start gap-4">
       {sagas.map((saga) => (
-        <li key={saga._id} className="space-y-1">
+        <li key={saga.id} className="space-y-1">
           <span className="font-medium text-lg text-slate-100">{saga.name}</span>
 
           <ul className="ml-4">
             {saga.songs.map((song) => (
               <li
-                key={song._id}
+                key={song.id}
                 className={`${textColors[saga.name]} text-opacity-50 hover:text-opacity-100`}
               >
                 <Link href={`/songs/${song.slug}`}>

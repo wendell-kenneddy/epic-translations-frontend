@@ -1,5 +1,5 @@
 import { Saga, SongList } from "@/components/song-list";
-import { client } from "@/sanity/lib/client";
+import { fetchSongs, SongsAndSagasResponse } from "@/queries/fetch-songs";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,29 +15,36 @@ export const metadata: Metadata = {
   },
 };
 
-async function fetchSagas() {
-  const sagas = await client.fetch<Saga[]>(
-    `*[_type == "saga"] | order(index) {
-      _id,
-      name,
-      "songs": *[_type == "song" && references(^._id)] | order(index) {
-        _id,
-        name,
-        "slug": slug.current
-      }
-    }`,
-  );
+function parseContentfulResponse(res: SongsAndSagasResponse) {
+  const sagas = res.includes.Entry.reduce<Saga[]>((acc, curr) => {
+    const relatedSongs = res.items
+      .filter((s) => s.fields.saga.sys.id == curr.sys.id)
+      .map((s) => ({
+        id: s.sys.id,
+        name: s.fields.name,
+        slug: s.fields.slug,
+      }));
+
+    acc.push({
+      id: curr.sys.id,
+      name: curr.fields.name,
+      songs: relatedSongs,
+    });
+
+    return acc;
+  }, []);
   return sagas;
 }
 
 export default async function Home() {
-  const sagas = await fetchSagas();
+  const songs = await fetchSongs();
+  const songsBySaga = parseContentfulResponse(songs);
 
   return (
     <main className="w-[90%] bg-slate-900 max-w-[500px] mx-auto flex flex-col items-center gap-4 p-4 rounded-md shadow-lg">
       <h1 className="font-medium text-lg text-slate-100 sr-only">Traduções por saga</h1>
 
-      <SongList sagas={sagas} />
+      <SongList sagas={songsBySaga} />
     </main>
   );
 }

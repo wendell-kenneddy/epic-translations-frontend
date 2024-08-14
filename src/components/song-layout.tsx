@@ -1,8 +1,8 @@
-import { PortableText, PortableTextBlock } from "next-sanity";
-import { SongData } from "./song-list";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { Document } from "@contentful/rich-text-types";
 
 interface SongLayoutProps {
-  song: SongData & { saga: string; lyrics: PortableTextBlock };
+  song: { name: string; lyrics: Document };
 }
 
 export function SongLayout({ song }: SongLayoutProps) {
@@ -11,13 +11,15 @@ export function SongLayout({ song }: SongLayoutProps) {
       <article className="space-y-4 text-left text-slate-100">
         <header className="w-full py-4 px-2 flex flex-col items-center justify-center gap-2 bg-slate-900 rounded-t-md shadow-lg">
           <h1 className="font-medium text-lg text-gray-100">{song.name}</h1>
-
-          <div className="h-px w-1/2 bg-slate-100/50 rounded-md"></div>
-
-          <span className="text-sm text-slate-100">{song.saga}</span>
         </header>
 
-        <PortableText value={song.lyrics} />
+        {documentToReactComponents(song.lyrics, {
+          renderText: (text) => {
+            return text.split("\n").reduce((children: any, textSegment, index) => {
+              return [...children, index > 0 && <br key={index} />, textSegment];
+            }, []);
+          },
+        })}
       </article>
     </main>
   );

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { env } from "@/lib/env";
 
 export async function POST(request: NextRequest) {
@@ -10,7 +10,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Invalid secret" }, { status: 401 });
   }
 
+  const { slug }: { slug: string } = await request.json();
+
   revalidateTag("songs");
+  revalidatePath(`/songs/${slug}`);
 
   return NextResponse.json({ revalidated: true });
 }

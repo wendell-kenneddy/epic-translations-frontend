@@ -30,7 +30,7 @@ export async function fetchSongs() {
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "no-store",
+      next: { tags: ["songs"] },
     }
   );
   const json: SongsAndSagasResponse = await response.json();

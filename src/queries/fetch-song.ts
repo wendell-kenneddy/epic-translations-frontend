@@ -11,6 +11,7 @@ export async function fetchSong(slug: string) {
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "no-store",
     }
   );
   const songJson: { fields: { name: string; lyrics: Document } } = await songResponse.json();

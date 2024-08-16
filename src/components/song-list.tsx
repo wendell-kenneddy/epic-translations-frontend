@@ -7,6 +7,7 @@ export interface SongData {
 }
 
 export interface Saga {
+  index: number;
   id: string;
   name: string;
   songs: SongData[];

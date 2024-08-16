@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
 
   const { slug }: { slug: string } = await request.json();
 
-  console.log(slug);
   revalidateTag("songs");
   revalidatePath(`/songs/${slug}`);
 

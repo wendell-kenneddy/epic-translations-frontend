@@ -18,14 +18,14 @@ export interface SongsAndSagasResponse {
   includes: {
     Entry: {
       sys: { id: string };
-      fields: { name: string };
+      fields: { name: string; index: number };
     }[];
   };
 }
 
 export async function fetchSongs() {
   const response = await fetch(
-    `${env.CONTENTFUL_API_URL}entries?access_token=${env.CONTENTFUL_ACCESS_TOKEN}&content_type=song&select=sys.id,fields.name,fields.slug,fields.saga&order=sys.createdAt&include=1`,
+    `${env.CONTENTFUL_API_URL}entries?access_token=${env.CONTENTFUL_ACCESS_TOKEN}&content_type=song&select=sys.id,fields.name,fields.slug,fields.saga&order=fields.index&include=1`,
     {
       headers: {
         "Content-Type": "application/json",

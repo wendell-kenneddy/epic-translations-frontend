@@ -27,13 +27,14 @@ function parseContentfulResponse(res: SongsAndSagasResponse) {
 
     acc.push({
       id: curr.sys.id,
+      index: curr.fields.index,
       name: curr.fields.name,
       songs: relatedSongs,
     });
 
     return acc;
   }, []);
-  return sagas;
+  return sagas.sort((a, b) => a.index - b.index);
 }
 
 export default async function Home() {

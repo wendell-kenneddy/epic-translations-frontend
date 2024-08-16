@@ -10,10 +10,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Invalid secret" }, { status: 401 });
   }
 
-  const { slug }: { slug: string } = await request.json();
+  const body: { slug: string } = await request.json();
 
+  console.log(body);
   revalidateTag("songs");
-  revalidatePath(`/songs/${slug}`);
+  revalidatePath(`/songs/${body.slug}`);
 
   return NextResponse.json({ revalidated: true });
 }

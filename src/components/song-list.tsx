@@ -24,6 +24,7 @@ const textColors: Record<string, string> = {
   "Circe Saga": "text-fuchsia-400",
   "Underworld Saga": "text-gray-400",
   "Thunder Saga": "text-yellow-400",
+  "Wisdom Saga": "text-violet-400",
 };
 
 export function SongList({ sagas }: SongListProps) {

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function Footer() {
   return (
     <footer className="w-full h-[10vh] bg-slate-900 flex items-center justify-center py-2 border-t border-slate-800">
@@ -11,7 +13,11 @@ export function Footer() {
         >
           Wendell Kenneddy
         </a>{" "}
-        e <span className="underline hover:text-slate-100/100">Julia Lana</span>.
+        e
+        <Link href="/chuulia" className="underline hover:text-slate-100/100">
+          Julia Lana
+        </Link>
+        .
       </p>
     </footer>
   );

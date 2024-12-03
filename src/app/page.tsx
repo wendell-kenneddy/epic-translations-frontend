@@ -1,6 +1,5 @@
-import { Saga, SongList } from "@/components/song-list";
-import { fetchSongs, SongsAndSagasResponse } from "@/queries/fetch-songs";
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Epic Translations",
@@ -15,37 +14,12 @@ export const metadata: Metadata = {
   },
 };
 
-function parseContentfulResponse(res: SongsAndSagasResponse) {
-  const sagas = res.includes.Entry.reduce<Saga[]>((acc, curr) => {
-    const relatedSongs = res.items
-      .filter((s) => s.fields.saga.sys.id == curr.sys.id)
-      .map((s) => ({
-        id: s.sys.id,
-        name: s.fields.name,
-        slug: s.fields.slug,
-      }));
-
-    acc.push({
-      id: curr.sys.id,
-      index: curr.fields.index,
-      name: curr.fields.name,
-      songs: relatedSongs,
-    });
-
-    return acc;
-  }, []);
-  return sagas.sort((a, b) => a.index - b.index);
-}
-
 export default async function Home() {
-  const songs = await fetchSongs();
-  const songsBySaga = parseContentfulResponse(songs);
-
   return (
-    <main className="w-[90%] bg-slate-900 max-w-[500px] mx-auto flex flex-col items-center gap-4 p-4 rounded-md shadow-lg">
-      <h1 className="font-medium text-lg text-slate-100 sr-only">Traduções por saga</h1>
+    <main className="w-full h-full flex flex-col items-center p-4 space-y-4 rounded-md shadow-lg">
+      <p className="text-slate-100 font-medium">Você ainda não selecionou nenhuma música :(</p>
 
-      <SongList sagas={songsBySaga} />
+      <Image priority={true} src="/catto.gif" alt="Dancing cat gif" width={200} height={200} />
     </main>
   );
 }

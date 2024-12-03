@@ -7,14 +7,17 @@ export function Footer() {
         Feito com ❤️ por{" "}
         <a
           href="https://github.com/wendell-kenneddy"
-          className="underline hover:text-slate-100/100"
+          className="underline text-teal-400/50 hover:text-teal-400 hover:no-underline"
           target="_blank"
           rel="noopener noreferrer"
         >
           Wendell Kenneddy
         </a>{" "}
         e{" "}
-        <Link href="/chuulia" className="underline hover:text-slate-100/100">
+        <Link
+          href="/chuulia"
+          className="underline text-teal-400/50 hover:text-teal-400 hover:no-underline"
+        >
           Julia Lana
         </Link>
         .

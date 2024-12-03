@@ -19,7 +19,14 @@ export default async function Home() {
     <main className="w-full h-full flex flex-col items-center p-4 space-y-4 rounded-md shadow-lg">
       <p className="text-slate-100 font-medium">Você ainda não selecionou nenhuma música :(</p>
 
-      <Image priority={true} src="/catto.gif" alt="Dancing cat gif" width={200} height={200} />
+      <Image
+        priority={true}
+        unoptimized={true}
+        src="/catto.gif"
+        alt="Dancing cat gif"
+        width={200}
+        height={200}
+      />
     </main>
   );
 }

@@ -7,9 +7,9 @@ interface SongLayoutProps {
 
 export function SongLayout({ song }: SongLayoutProps) {
   return (
-    <main className="w-[90%] max-w-[500px] mx-auto space-y-4">
+    <main className="w-[90%] py-4 max-w-[500px] mx-auto space-y-4">
       <article className="space-y-4 text-left text-slate-100">
-        <header className="w-full py-4 px-2 flex flex-col items-center justify-center gap-2 bg-slate-900 rounded-t-md shadow-lg">
+        <header className="w-full flex flex-col items-start justify-center">
           <h1 className="font-medium text-lg text-gray-100">{song.name}</h1>
         </header>
 

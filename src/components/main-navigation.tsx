@@ -37,7 +37,7 @@ export function MainNavigation({ children }: MainNavigationProps) {
       </Header>
 
       <div className="w-full h-[80vh] flex items-start relative">
-        <Sidebar isOpen={isOpen}>
+        <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}>
           <SongList onSongSelect={toggleSidebar} />
         </Sidebar>
 

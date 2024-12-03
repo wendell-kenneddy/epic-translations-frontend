@@ -1,15 +1,24 @@
-import { ReactNode } from "react";
+import { ReactNode, useRef, MouseEvent } from "react";
 
 interface SidebarProps {
   isOpen: boolean;
+  toggleSidebar: () => void;
   children: ReactNode;
 }
 
-export function Sidebar({ isOpen, children }: SidebarProps) {
+export function Sidebar({ isOpen, toggleSidebar, children }: SidebarProps) {
   const sideBarStyle = isOpen ? "left-0" : "-left-[100%]";
+  const asideRef = useRef<HTMLElement | null>(null);
+
+  function handleSidebarClick(e: MouseEvent) {
+    if (!asideRef.current) return;
+    if (e.target == asideRef.current) toggleSidebar();
+  }
 
   return (
     <aside
+      onClick={(e) => handleSidebarClick(e)}
+      ref={asideRef}
       className={`z-10 w-full sm:w-1/3 h-full sm:static absolute top-0 ${sideBarStyle} bg-black/40 sm:bg-none`}
     >
       <nav

@@ -13,7 +13,7 @@ export function Footer() {
         >
           Wendell Kenneddy
         </a>{" "}
-        e
+        e{" "}
         <Link href="/chuulia" className="underline hover:text-slate-100/100">
           Julia Lana
         </Link>

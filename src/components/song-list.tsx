@@ -30,7 +30,8 @@ const textColors: Record<string, Record<string, string>> = {
   "Underworld Saga": { text: "text-gray-400", fill: "fill-gray-400" },
   "Thunder Saga": { text: "text-yellow-400", fill: "fill-yellow-400" },
   "Wisdom Saga": { text: "text-violet-400", fill: "fill-violet-400" },
-  "Vengeance Saga": { text: "text-red-600", fill: "fill-red-600" },
+  "Vengeance Saga": { text: "text-cyan-600", fill: "fill-cyan-600" },
+  "Ithaca Saga": { text: "text-red-600", fill: "fill-red-600" },
 };
 
 export function SongList({ onSongSelect }: SongListProps) {
